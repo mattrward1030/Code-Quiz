@@ -43,3 +43,31 @@ var questions = [
 ]
 console.log(questions)
 
+// have to add functions and should define variables for id's and use query selector all
+
+
+function countdown() {
+    // Sets interval in variable
+    var timerInterval = setInterval(function () {
+        secondsLeft--;
+        timerCount.textContent = secondsLeft;
+
+        if (secondsLeft === 0) {
+            // Stops execution of action at set interval
+            clearInterval(timerInterval);
+            // // Calls function to create and append image
+            // sendMessage();
+        }
+
+    }, 1000);
+}
+
+function random() {
+
+
+}
+startButton.addEventListener("click", function (event) {
+    event.preventDefault()
+    random()
+    countdown()
+})
