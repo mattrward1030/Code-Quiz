@@ -11,9 +11,10 @@
 // THEN I can save my initials and my score
 var startScreen = document.getElementById("start-screen")
 var startButton = document.getElementById("start-button")
+var timerCount = document.querySelector(".timer-count")
+var secondsLeft = 60
 var questionContainer = document.createElement("div")
-var score = 0
-
+var choiceContainer = document.createElement("ul")
 var questions = [
     {
         question: "Commonly used data types DO NOT include:",
@@ -47,11 +48,6 @@ var questions = [
 ]
 console.log(questions)
 
-var timerCount = document.querySelector(".timer-count")
-var secondsLeft = 60;
-var interval = 0;
-var penalty = 10;
-
 
 function countdown() {
     // Sets interval in variable
@@ -78,35 +74,30 @@ startButton.addEventListener("click", function (event) {
 })
 
 var currentQuestion = 0
-
 function startQuestions() {
     var button = document.createElement("button")
     button.textContent = "Next Question";
     button.addEventListener("click", nextQuestion);
-    var choiceContainer = document.createElement("ul")
+
     for (var i = 0; i < questions[currentQuestion].choices.length; i++) {
         var choiceButton = document.createElement("button")
         choiceButton.textContent = questions[currentQuestion].choices[i]
         choiceButton.setAttribute("value", questions[currentQuestion].choices[i])
         choiceContainer.appendChild(choiceButton)
-        choiceButton.addEventListener("click", nextQuestion)
     }
-    // choiceButton.addEventListener("click", nextQuestion)
+    choiceButton.addEventListener("click", nextQuestion)
     questionContainer.textContent = questions[currentQuestion].question;
     // choiceContainer.textContent = questions[currentQuestion].choices;
-    document.getElementById("questions").appendChild(questionContainer);
-    document.getElementById("questions").appendChild(choiceContainer)
-    document.getElementById("questions").appendChild(button);
+    document.body.appendChild(questionContainer);
+    document.body.appendChild(choiceContainer)
+    document.body.appendChild(button);
 
 
 }
 
 function nextQuestion() {
     currentQuestion++;
-    document.getElementById("questions").innerHTML = ""
-    startQuestions()
+    questionContainer.textContent = questions[currentQuestion].question;
+    choiceContainer.textContent = questions[currentQuestion].choices;
 
 }
-
-
-
