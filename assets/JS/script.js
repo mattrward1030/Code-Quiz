@@ -9,6 +9,18 @@
 // THEN the game is over
 // WHEN the game is over
 // THEN I can save my initials and my score
+var startScreen = document.getElementById("start-screen")
+var startButton = document.getElementById("start-button")
+
+
+function startQuestions() {
+    console.log("GO TO START QUESTIONS")
+}
+startButton.addEventListener("click", function () {
+    console.log("YOU CLICKED ME");
+    startScreen.setAttribute("style", "display: none;");
+    startQuestions();
+})
 
 var questions = [
     {
@@ -45,29 +57,36 @@ console.log(questions)
 
 // have to add functions and should define variables for id's and use query selector all
 
-
-function countdown() {
-    // Sets interval in variable
-    var timerInterval = setInterval(function () {
-        secondsLeft--;
-        timerCount.textContent = secondsLeft;
-
-        if (secondsLeft === 0) {
-            // Stops execution of action at set interval
-            clearInterval(timerInterval);
-            // // Calls function to create and append image
-            // sendMessage();
-        }
-
-    }, 1000);
-}
-
-function random() {
+// var startButton = document.querySelector(".start-button")
+// var resetButton = document.querySelector(".reset-button")
+// var wordBlanks = document.querySelector(".word-blanks")
+// var cardTimer = document.querySelector(".timer")
+// var timerCount = document.querySelector(".timer-count")
+// var secondsLeft = 60
 
 
-}
-startButton.addEventListener("click", function (event) {
-    event.preventDefault()
-    random()
-    countdown()
-})
+// function countdown() {
+//     // Sets interval in variable
+//     var timerInterval = setInterval(function () {
+//         secondsLeft--;
+//         timerCount.textContent = secondsLeft;
+
+//         if (secondsLeft === 0) {
+//             // Stops execution of action at set interval
+//             clearInterval(timerInterval);
+//             // // Calls function to create and append image
+//             // sendMessage();
+//         }
+
+//     }, 1000);
+// }
+
+// function random() {
+
+
+// }
+// startButton.addEventListener("click", function (event) {
+//     event.preventDefault()
+//     random()
+//     countdown()
+// })
