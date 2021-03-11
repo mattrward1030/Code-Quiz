@@ -13,6 +13,7 @@ var score = 0;
 var currentQuestion = 0;
 var timer = document.querySelector("#timer");
 var startTimer = document.querySelector("#start-button");
+var startScreen = document.getElementById("start-screen")
 var questionContainer = document.querySelector("#questions");
 
 var secondsLeft = 80;
@@ -55,6 +56,12 @@ var questions = [
 ]
 console.log(questions)
 
+startTimer.addEventListener("click", function (event) {
+    event.preventDefault()
+    console.log("YOU CLICKED ME");
+    startScreen.setAttribute("style", "display: none;");
+})
+
 
 startTimer.addEventListener("click", function () {
     if (interval === 0) {
@@ -71,6 +78,29 @@ startTimer.addEventListener("click", function () {
     }
     render(currentQuestion);
 });
+
+// display questions on the screen using render function
+
+function render(currentQuestion) {
+    currentQuestion.innerHTML = "";
+    choiceContainer.innerHTML = "";
+
+    for (var i = 0; i < questions.length; i++) {
+        var userQ = questions[currentQuestion].question;
+        var userC = questions[currentQuestion].choices;
+        questionContainer.textContent = userQ;
+    }
+
+    userC.forEach(function (choiceSelection) {
+        var listItem = document.createElement("li");
+        listItem.textContent = choiceSelection;
+        questionContainer.appendChild(choiceContainer)
+        choiceContainer.appendChild(listItem);
+        listItem.addEventListener("click", (compare));
+    })
+}
+
+function compare
 
 // function countdown() {
 //     // Sets interval in variable
