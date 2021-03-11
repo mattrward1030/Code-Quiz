@@ -131,56 +131,82 @@ function compare(event) {
 
 }
 
+function endGame() {
+    questionContainer.innerHTML = "";
+    timer.innerHTML = "";
 
-// function countdown() {
-//     // Sets interval in variable
-//     var timerInterval = setInterval(function () {
-//         secondsLeft--;
-//         timerCount.textContent = secondsLeft;
+    var h1 = document.createElement("h1");
+    h1.setAttribute("id", "h1");
+    h1.textContent = "END GAME!"
 
-//         if (secondsLeft === 0) {
-//             // Stops execution of action at set interval
-//             clearInterval(timerInterval);
-//             // // Calls function to create and append image
-//             // sendMessage();
-//         }
+    questionContainer.appendChild(h1)
 
-//     }, 1000);
-// }
+    var p = document.createElement("p");
+    p.setAttribute("id", "p");
 
-// startButton.addEventListener("click", function (event) {
-//     event.preventDefault()
-//     console.log("YOU CLICKED ME");
-//     startScreen.setAttribute("style", "display: none;");
-//     startQuestions();
-//     countdown();
-// })
-
-// var currentQuestion = 0
-// function startQuestions() {
-//     var button = document.createElement("button")
-//     button.textContent = "Next Question";
-//     button.addEventListener("click", nextQuestion);
-
-//     for (var i = 0; i < questions[currentQuestion].choices.length; i++) {
-//         var choiceButton = document.createElement("button")
-//         choiceButton.textContent = questions[currentQuestion].choices[i]
-//         choiceButton.setAttribute("value", questions[currentQuestion].choices[i])
-//         choiceContainer.appendChild(choiceButton)
-//     }
-//     choiceButton.addEventListener("click", nextQuestion)
-//     questionContainer.textContent = questions[currentQuestion].question;
-//     // choiceContainer.textContent = questions[currentQuestion].choices;
-//     document.body.appendChild(questionContainer);
-//     document.body.appendChild(choiceContainer)
-//     document.body.appendChild(button);
+    questionContainer.appendChild(p);
 
 
-// }
 
-// function nextQuestion() {
-//     currentQuestion++;
-//     questionContainer.textContent = questions[currentQuestion].question;
-//     choiceContainer.textContent = questions[currentQuestion].choices;
+    if (secondsLeft >= 0) {
+        var timeLeft = secondsLeft;
+        var p2 = document.createElement("p");
+        clearInterval(interval);
+        p.textContent = "Your score is: " + timeLeft;
 
-// }
+        questionContainer.appendChild(p2);
+
+    }
+
+    var label = document.createElement("label");
+    label.setAttribute("id", "label");
+    label.textContent = "Enter your name: ";
+
+    questionContainer.appendChild(label);
+
+
+    var input = document.createElement("input")
+    input.setAttribute("type", "text");
+    input.setAttribute("id", "initials");
+    input.textContent = "";
+
+    questionContainer.appendChild(input);
+
+    var submitForm = document.createElement("button");
+    submitForm.setAttribute("type", "submit");
+    submitForm.setAttribute("id", "Submit");
+    submitForm.textContent = "Submit";
+
+    questionContainer.appendChild(submitForm);
+
+    submitForm.addEventListener("click", function () {
+        var name = input.value;
+
+        if (name === null) {
+            console.log("no name enetered");
+
+        }
+        else {
+            var finalScore = {
+                name: name,
+                socre: timeLeft
+            }
+            console.log(finalScore);
+            var totalScores = localStorage.getItem("totalScores");
+            if (totalScores === null) {
+                totalScores = [];
+            }
+            else {
+                totalScores = JSON.parse(totalScores);
+            }
+            totalScores.push(finalScore);
+            var newScore = JSON.stringify(totalScores);
+            localStorage.setItem("totalScores", totalScores);
+
+            renderLastRegistered();
+        }
+    });
+
+
+}
+
