@@ -189,7 +189,7 @@ function endGame() {
         else {
             var finalScore = {
                 name: name,
-                socre: timeLeft
+                score: timeLeft
             }
             console.log(finalScore);
             var totalScores = localStorage.getItem("totalScores");
@@ -201,9 +201,9 @@ function endGame() {
             }
             totalScores.push(finalScore);
             var newScore = JSON.stringify(totalScores);
-            localStorage.setItem("totalScores", totalScores);
+            localStorage.setItem("score", timeleft);
+            localStorage.setItem("name", name)
 
-            renderLastRegistered();
         }
     });
 
