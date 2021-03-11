@@ -78,10 +78,16 @@ function startQuestions() {
     var button = document.createElement("button")
     button.textContent = "Next Question";
     button.addEventListener("click", nextQuestion);
-    // var li = document.createElement("li")
-    // li.addEventListener("click", nextQuestion);
+
+    for (var i = 0; i < questions[currentQuestion].choices.length; i++) {
+        var choiceButton = document.createElement("button")
+        choiceButton.textContent = questions[currentQuestion].choices[i]
+        choiceButton.setAttribute("value", questions[currentQuestion].choices[i])
+        choiceContainer.appendChild(choiceButton)
+    }
+    choiceButton.addEventListener("click", nextQuestion)
     questionContainer.textContent = questions[currentQuestion].question;
-    choiceContainer.textContent = questions[currentQuestion].choices;
+    // choiceContainer.textContent = questions[currentQuestion].choices;
     document.body.appendChild(questionContainer);
     document.body.appendChild(choiceContainer)
     document.body.appendChild(button);
