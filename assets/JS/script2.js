@@ -100,7 +100,37 @@ function render(currentQuestion) {
     })
 }
 
-function compare
+function compare(event) {
+    var element = event.target;
+
+    if (element.matches("li")) {
+        var newDiv = document.createElement("div");
+        newDiv.setAttribute("id", "newDiv");
+
+        if (element.textContent == questions[currentQuestion].answer) {
+            score++
+            newDiv.textContent = "Correct! The answer is: " + questions[currentQuestion].answer;
+        }
+        else {
+            secondsLeft = secondsLeft - penalty;
+            newDiv.textContent = "Wrong! THE CORRECT ANSWER IS: " + questions[currentQuestion].answer;
+        }
+    }
+
+
+    currentQuestion++
+
+    if (currentQuestion >= questions.length) {
+        endGame();
+        newDiv.textContent = "QUIZ OVER!" + " " + "You got " + score + "/" + questions.length + " Correct!";
+    }
+    else {
+        render(currentQuestion)
+    }
+    questionContainer.appendChild(newDiv);
+
+}
+
 
 // function countdown() {
 //     // Sets interval in variable
