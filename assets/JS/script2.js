@@ -13,7 +13,7 @@ var score = 0;
 var currentQuestion = 0;
 var timer = document.querySelector("#timer");
 var startTimer = document.querySelector("#start-button");
-var startScreen = document.getElementById("start-screen")
+var startScreen = document.querySelector(".start-screen")
 var questionContainer = document.querySelector("#questions");
 
 var secondsLeft = 80;
@@ -56,14 +56,10 @@ var questions = [
 ]
 console.log(questions)
 
-startTimer.addEventListener("click", function (event) {
-    event.preventDefault()
-    console.log("YOU CLICKED ME");
-    startScreen.setAttribute("style", "display: none;");
-})
 
 
 startTimer.addEventListener("click", function () {
+    startScreen.setAttribute("style", "display: none;");
     if (interval === 0) {
         interval = setInterval(function () {
             secondsLeft--;
