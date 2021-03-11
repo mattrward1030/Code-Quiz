@@ -80,9 +80,7 @@ startButton.addEventListener("click", function (event) {
 var currentQuestion = 0
 
 function startQuestions() {
-    var button = document.createElement("button")
-    button.textContent = "Next Question";
-    button.addEventListener("click", nextQuestion);
+
     var choiceContainer = document.createElement("ul")
     for (var i = 0; i < questions[currentQuestion].choices.length; i++) {
         var choiceButton = document.createElement("button")
@@ -90,13 +88,14 @@ function startQuestions() {
         choiceButton.setAttribute("value", questions[currentQuestion].choices[i])
         choiceContainer.appendChild(choiceButton)
         choiceButton.addEventListener("click", nextQuestion)
+        choiceButton.addEventListener("click", (compare))
     }
-    // choiceButton.addEventListener("click", nextQuestion)
+
     questionContainer.textContent = questions[currentQuestion].question;
-    // choiceContainer.textContent = questions[currentQuestion].choices;
+
     document.getElementById("questions").appendChild(questionContainer);
     document.getElementById("questions").appendChild(choiceContainer)
-    document.getElementById("questions").appendChild(button);
+
 
 
 }
@@ -108,5 +107,38 @@ function nextQuestion() {
 
 }
 
+// Event to compare choices with answer
+function compare(event) {
+    var element = event.target;
 
+    if (element.matches("choiceButton")) {
+
+        var newDiv = document.createElement("div");
+        newDiv.setAttribute("id", "createDiv");
+        // Correct condition 
+        if (element.textContent == questions[currentQuestion].answer) {
+            score++;
+            newDiv.textContent = "Correct! The answer is:  " + questions[currentQuestion].answer;
+            // Correct condition 
+        } else {
+            // Will deduct -5 seconds off secondsLeft for wrong answers
+            secondsLeft = secondsLeft - penalty;
+            newDiv.textContent = "Wrong! The correct answer is:  " + questions[currentQuestion].answer;
+        }
+
+    }
+}
+
+
+currentQuestion++;
+
+
+if (currentQuestion >= questions.length) {
+    // All done will append last page with user stats
+    allDone();
+    newDiv.textContent = "End of quiz!" + " " + "You got  " + score + "/" + questions.length + " Correct!";
+} else {
+
+}
+questionContainer.appendChild(newDiv);
 
