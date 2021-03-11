@@ -11,16 +11,8 @@
 // THEN I can save my initials and my score
 var startScreen = document.getElementById("start-screen")
 var startButton = document.getElementById("start-button")
-
-
-function startQuestions() {
-    console.log("GO TO START QUESTIONS")
-}
-startButton.addEventListener("click", function () {
-    console.log("YOU CLICKED ME");
-    startScreen.setAttribute("style", "display: none;");
-    startQuestions();
-})
+var timerCount = document.querySelector(".timer-count")
+var secondsLeft = 60
 
 var questions = [
     {
@@ -55,31 +47,43 @@ var questions = [
 ]
 console.log(questions)
 
+
+function countdown() {
+    // Sets interval in variable
+    var timerInterval = setInterval(function () {
+        secondsLeft--;
+        timerCount.textContent = secondsLeft;
+
+        if (secondsLeft === 0) {
+            // Stops execution of action at set interval
+            clearInterval(timerInterval);
+            // // Calls function to create and append image
+            // sendMessage();
+        }
+
+    }, 1000);
+}
+
+startButton.addEventListener("click", function () {
+    console.log("YOU CLICKED ME");
+    startScreen.setAttribute("style", "display: none;");
+    startQuestions();
+    countdown();
+})
+
+function startQuestions() {
+    console.log("GO TO START QUESTIONS")
+}
+
 // have to add functions and should define variables for id's and use query selector all
 
 // var startButton = document.querySelector(".start-button")
 // var resetButton = document.querySelector(".reset-button")
 // var wordBlanks = document.querySelector(".word-blanks")
 // var cardTimer = document.querySelector(".timer")
-// var timerCount = document.querySelector(".timer-count")
-// var secondsLeft = 60
 
 
-// function countdown() {
-//     // Sets interval in variable
-//     var timerInterval = setInterval(function () {
-//         secondsLeft--;
-//         timerCount.textContent = secondsLeft;
 
-//         if (secondsLeft === 0) {
-//             // Stops execution of action at set interval
-//             clearInterval(timerInterval);
-//             // // Calls function to create and append image
-//             // sendMessage();
-//         }
-
-//     }, 1000);
-// }
 
 // function random() {
 
