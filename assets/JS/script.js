@@ -14,7 +14,7 @@ var startButton = document.getElementById("start-button")
 var timerCount = document.querySelector(".timer-count")
 var secondsLeft = 60
 var questionContainer = document.createElement("div")
-
+var choiceContainer = document.createElement("ul")
 var questions = [
     {
         question: "Commonly used data types DO NOT include:",
@@ -81,9 +81,31 @@ function startQuestions() {
     questionContainer.textContent = questions[currentQuestion].question;
     document.body.appendChild(questionContainer);
     document.body.appendChild(button);
+
+    var li = document.createElement("li")
+    li.addEventListener("click", nextQuestion);
+    choiceContainer.textContent = questions[currentQuestion].choices;
+    document.body.appendChild(choiceContainer)
 }
+
 function nextQuestion() {
     currentQuestion++;
     questionContainer.textContent = questions[currentQuestion].question;
+    choiceContainer.textContent = questions[currentQuestion].choices;
+
 }
+
+// function choices() {
+//     currentQuestion++;
+//     questionContainer.textContent = questions[currentQuestion].choices;
+// }
+// function choices() {
+//     var ul = document.createElement("ul")
+//     ul.textContent = "li";
+//     questionContainer.textContent = questions[currentQuestion].choices;
+//     document.body.appendChild(questionContainer);
+//     currentQuestion++;
+//     questionContainer.textContent = questions[currentQuestion].choices;
+// }
+
 
