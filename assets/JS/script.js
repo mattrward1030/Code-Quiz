@@ -13,6 +13,7 @@ var startScreen = document.getElementById("start-screen")
 var startButton = document.getElementById("start-button")
 var timerCount = document.querySelector(".timer-count")
 var secondsLeft = 60
+var questionContainer = document.createElement("div")
 
 var questions = [
     {
@@ -64,33 +65,25 @@ function countdown() {
     }, 1000);
 }
 
-startButton.addEventListener("click", function () {
+startButton.addEventListener("click", function (event) {
+    event.preventDefault()
     console.log("YOU CLICKED ME");
     startScreen.setAttribute("style", "display: none;");
     startQuestions();
     countdown();
 })
 
+var currentQuestion = 0
 function startQuestions() {
-    console.log("GO TO START QUESTIONS")
+    var button = document.createElement("button")
+    button.textContent = "Next Question";
+    button.addEventListener("click", nextQuestion);
+    questionContainer.textContent = questions[currentQuestion].question;
+    document.body.appendChild(questionContainer);
+    document.body.appendChild(button);
+}
+function nextQuestion() {
+    currentQuestion++;
+    questionContainer.textContent = questions[currentQuestion].question;
 }
 
-// have to add functions and should define variables for id's and use query selector all
-
-// var startButton = document.querySelector(".start-button")
-// var resetButton = document.querySelector(".reset-button")
-// var wordBlanks = document.querySelector(".word-blanks")
-// var cardTimer = document.querySelector(".timer")
-
-
-
-
-// function random() {
-
-
-// }
-// startButton.addEventListener("click", function (event) {
-//     event.preventDefault()
-//     random()
-//     countdown()
-// })
