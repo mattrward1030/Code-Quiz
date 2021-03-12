@@ -118,7 +118,7 @@ function compare(event) {
 
     if (currentQuestion >= questions.length) {
         endGame();
-        newDiv.textContent = "QUIZ OVER!" + " " + "You got " + score + "/" + questions.length + " Correct!";
+        newDiv.textContent = "QUIZ OVER!" + " " + "You got " + score + " out of " + questions.length + " Correct!";
     }
     else {
         render(currentQuestion)
@@ -189,16 +189,16 @@ function endGame() {
                 score: timeLeft
             }
             console.log(finalScore);
-            var totalScores = localStorage.getItem("totalScores");
-            if (totalScores === null) {
-                totalScores = [];
+            var highScores = localStorage.getItem("highScores");
+            if (highScores === null) {
+                highScores = [];
             }
             else {
-                totalScores = JSON.parse(totalScores);
+                highScores = JSON.parse(highScores);
             }
-            totalScores.push(finalScore);
-            var newScore = JSON.stringify(totalScores);
-            localStorage.setItem("totalScores", newScore);
+            highScores.push(finalScore);
+            var newScore = JSON.stringify(highScores);
+            localStorage.setItem("highScores", newScore);
 
 
         }
