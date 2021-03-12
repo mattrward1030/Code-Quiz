@@ -163,7 +163,7 @@ function endGame() {
 
     var input = document.createElement("input")
     input.setAttribute("type", "text");
-    input.setAttribute("id", "initials");
+    input.setAttribute("id", "name");
     input.textContent = "";
 
     questionContainer.appendChild(input);
@@ -183,6 +183,7 @@ function endGame() {
 
         }
         else {
+
             var finalScore = {
                 name: name,
                 score: timeLeft
@@ -197,8 +198,8 @@ function endGame() {
             }
             totalScores.push(finalScore);
             var newScore = JSON.stringify(totalScores);
-            localStorage.setItem("score", timeleft);
-            localStorage.setItem("name", name)
+            localStorage.setItem("totalScores", newScore);
+
 
         }
     });
