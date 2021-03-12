@@ -9,10 +9,19 @@
 // THEN the game is over
 // WHEN the game is over
 // THEN I can save my initials and my score
-var startScreen = document.getElementById("start-screen")
-var startButton = document.getElementById("start-button")
-var questionContainer = document.createElement("div")
-var score = 0
+var score = 0;
+var currentQuestion = 0;
+var timer = document.querySelector("#timer");
+var startTimer = document.querySelector("#start-button");
+var startScreen = document.querySelector(".start-screen")
+var questionContainer = document.querySelector("#questions");
+
+var secondsLeft = 60;
+
+var interval = 0;
+var penalty = 10;
+
+var choiceContainer = document.createElement("ol");
 
 var questions = [
     {
@@ -47,98 +56,154 @@ var questions = [
 ]
 console.log(questions)
 
-var timerCount = document.querySelector(".timer-count")
-var secondsLeft = 60;
-var interval = 0;
-var penalty = 10;
 
 
-function countdown() {
-    // Sets interval in variable
-    var timerInterval = setInterval(function () {
-        secondsLeft--;
-        timerCount.textContent = secondsLeft;
-
-        if (secondsLeft === 0) {
-            // Stops execution of action at set interval
-            clearInterval(timerInterval);
-            // // Calls function to create and append image
-            // sendMessage();
-        }
-
-    }, 1000);
-}
-
-startButton.addEventListener("click", function (event) {
-    event.preventDefault()
-    console.log("YOU CLICKED ME");
+startTimer.addEventListener("click", function () {
     startScreen.setAttribute("style", "display: none;");
-    startQuestions();
-    countdown();
-})
+    if (interval === 0) {
+        interval = setInterval(function () {
+            secondsLeft--;
+            timer.textContent = "Time: " + secondsLeft;
 
-var currentQuestion = 0
+            if (secondsLeft <= 0) {
+                clearInterval(interval);
+                endGame();
+                timer.textContent = "GAME OVER, YOU HAVE RUN OUT OF TIME!";
+            }
+        }, 1000);
+    }
+    render(currentQuestion);
+});
 
-function startQuestions() {
+// display questions on the screen using render function
 
-    var choiceContainer = document.createElement("ul")
-    for (var i = 0; i < questions[currentQuestion].choices.length; i++) {
-        var choiceButton = document.createElement("button")
-        choiceButton.textContent = questions[currentQuestion].choices[i]
-        choiceButton.setAttribute("value", questions[currentQuestion].choices[i])
-        choiceContainer.appendChild(choiceButton)
-        choiceButton.addEventListener("click", nextQuestion)
-        choiceButton.addEventListener("click", (compare))
+function render(currentQuestion) {
+    currentQuestion.innerHTML = "";
+    choiceContainer.innerHTML = "";
+
+    for (var i = 0; i < questions.length; i++) {
+        var userQ = questions[currentQuestion].question;
+        var userC = questions[currentQuestion].choices;
+        questionContainer.textContent = userQ;
     }
 
-    questionContainer.textContent = questions[currentQuestion].question;
-
-    document.getElementById("questions").appendChild(questionContainer);
-    document.getElementById("questions").appendChild(choiceContainer)
-
-
-
+    userC.forEach(function (choiceSelection) {
+        var listItem = document.createElement("li");
+        listItem.textContent = choiceSelection;
+        questionContainer.appendChild(choiceContainer)
+        choiceContainer.appendChild(listItem);
+        listItem.addEventListener("click", (compare));
+    })
 }
 
-function nextQuestion() {
-    currentQuestion++;
-    document.getElementById("questions").innerHTML = ""
-    startQuestions()
-
-}
-
-// Event to compare choices with answer
 function compare(event) {
     var element = event.target;
 
-    if (element.matches("choiceButton")) {
-
+    if (element.matches("li")) {
         var newDiv = document.createElement("div");
-        newDiv.setAttribute("id", "createDiv");
-        // Correct condition 
+        newDiv.setAttribute("id", "newDiv");
+
         if (element.textContent == questions[currentQuestion].answer) {
-            score++;
-            newDiv.textContent = "Correct! The answer is:  " + questions[currentQuestion].answer;
-            // Correct condition 
-        } else {
-            // Will deduct -5 seconds off secondsLeft for wrong answers
-            secondsLeft = secondsLeft - penalty;
-            newDiv.textContent = "Wrong! The correct answer is:  " + questions[currentQuestion].answer;
+            score++
+            newDiv.textContent = "Correct! The answer is: " + questions[currentQuestion].answer;
         }
+        else {
+            secondsLeft = secondsLeft - penalty;
+            newDiv.textContent = "Wrong! THE CORRECT ANSWER IS: " + questions[currentQuestion].answer;
+        }
+    }
+
+
+    currentQuestion++
+
+    if (currentQuestion >= questions.length) {
+        endGame();
+        newDiv.textContent = "QUIZ OVER!" + " " + "You got " + score + " out of " + questions.length + " Correct!";
+    }
+    else {
+        render(currentQuestion)
+    }
+    questionContainer.appendChild(newDiv);
+
+}
+
+function endGame() {
+    questionContainer.innerHTML = "";
+    timer.innerHTML = "";
+
+    var h1 = document.createElement("h1");
+    h1.setAttribute("id", "h1");
+    h1.textContent = "END GAME!"
+
+    questionContainer.appendChild(h1)
+
+    var p = document.createElement("p");
+    p.setAttribute("id", "p");
+
+    questionContainer.appendChild(p);
+
+
+
+    if (secondsLeft >= 0) {
+        var timeLeft = secondsLeft;
+        var p2 = document.createElement("p");
+        clearInterval(interval);
+        p.textContent = "Your score is: " + timeLeft;
+
+        questionContainer.appendChild(p2);
 
     }
+
+    var label = document.createElement("label");
+    label.setAttribute("id", "label");
+    label.textContent = "Enter your name: ";
+
+    questionContainer.appendChild(label);
+
+
+    var input = document.createElement("input")
+    input.setAttribute("type", "text");
+    input.setAttribute("id", "name");
+    input.textContent = "";
+
+    questionContainer.appendChild(input);
+
+    var submitForm = document.createElement("button");
+    submitForm.setAttribute("type", "submit");
+    submitForm.setAttribute("id", "Submit");
+    submitForm.textContent = "Submit";
+
+    questionContainer.appendChild(submitForm);
+
+    submitForm.addEventListener("click", function () {
+        var name = input.value;
+
+        if (name === null) {
+            console.log("no name enetered");
+
+        }
+        else {
+
+            var finalScore = {
+                name: name,
+                score: timeLeft
+            }
+            console.log(finalScore);
+            var highScores = localStorage.getItem("highScores");
+            if (highScores === null) {
+                highScores = [];
+            }
+            else {
+                highScores = JSON.parse(highScores);
+            }
+            highScores.push(finalScore);
+            var newScore = JSON.stringify(highScores);
+            localStorage.setItem("highScores", newScore);
+
+            // window.location.assign("/");
+        }
+    });
+
+
 }
-
-
-currentQuestion++;
-
-
-if (currentQuestion >= questions.length) {
-    // All done will append last page with user stats
-    allDone();
-    newDiv.textContent = "End of quiz!" + " " + "You got  " + score + "/" + questions.length + " Correct!";
-} else {
-
-}
-questionContainer.appendChild(newDiv);
 
