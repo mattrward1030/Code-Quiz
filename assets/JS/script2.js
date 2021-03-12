@@ -16,12 +16,12 @@ var startTimer = document.querySelector("#start-button");
 var startScreen = document.querySelector(".start-screen")
 var questionContainer = document.querySelector("#questions");
 
-var secondsLeft = 80;
+var secondsLeft = 60;
 
 var interval = 0;
 var penalty = 10;
 
-var choiceContainer = document.createElement("ul");
+var choiceContainer = document.createElement("ol");
 
 var questions = [
     {
@@ -200,7 +200,7 @@ function endGame() {
             var newScore = JSON.stringify(highScores);
             localStorage.setItem("highScores", newScore);
 
-
+            // window.location.assign("/");
         }
     });
 
