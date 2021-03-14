@@ -9,6 +9,8 @@
 // THEN the game is over
 // WHEN the game is over
 // THEN I can save my initials and my score
+
+// define global variables
 var score = 0;
 var currentQuestion = 0;
 var timer = document.querySelector("#timer");
@@ -23,6 +25,7 @@ var penalty = 10;
 
 var choiceContainer = document.createElement("ol");
 
+//  define questions so they can be displayed later
 var questions = [
     {
         question: "Commonly used data types DO NOT include:",
@@ -54,9 +57,9 @@ var questions = [
         answer: "console.log"
     },
 ]
-console.log(questions)
 
 
+// Event listener for a on click function to start the time and remove homescreen so questions can be displayed. Tells what to be displayed to user based on secondsLeft when game is over
 
 startTimer.addEventListener("click", function () {
     startScreen.setAttribute("style", "display: none;");
@@ -75,7 +78,7 @@ startTimer.addEventListener("click", function () {
     render(currentQuestion);
 });
 
-// display questions on the screen using render function
+// display questions on the screen using a for loop
 
 function render(currentQuestion) {
     currentQuestion.innerHTML = "";
@@ -96,6 +99,8 @@ function render(currentQuestion) {
     })
 }
 
+
+// compare function to compare users choice with the correct answer
 function compare(event) {
     var element = event.target;
 
@@ -127,6 +132,8 @@ function compare(event) {
 
 }
 
+// endGame function to be run when user reaches the end of the quiz
+// create, add content, append
 function endGame() {
     questionContainer.innerHTML = "";
     timer.innerHTML = "";
@@ -143,7 +150,7 @@ function endGame() {
     questionContainer.appendChild(p);
 
 
-
+    // if more than zero seconds then tell user their score
     if (secondsLeft >= 0) {
         var timeLeft = secondsLeft;
         var p2 = document.createElement("p");
@@ -153,14 +160,14 @@ function endGame() {
         questionContainer.appendChild(p2);
 
     }
-
+    // create, add content, append 
     var label = document.createElement("label");
     label.setAttribute("id", "label");
     label.textContent = "Enter your name: ";
 
     questionContainer.appendChild(label);
 
-
+    // create, add content, append
     var input = document.createElement("input")
     input.setAttribute("type", "text");
     input.setAttribute("id", "name");
@@ -168,6 +175,7 @@ function endGame() {
 
     questionContainer.appendChild(input);
 
+    // create, add content, append
     var submitForm = document.createElement("button");
     submitForm.setAttribute("type", "submit");
     submitForm.setAttribute("id", "Submit");
@@ -175,6 +183,7 @@ function endGame() {
 
     questionContainer.appendChild(submitForm);
 
+    // add event listener for when user submits their score
     submitForm.addEventListener("click", function () {
         var name = input.value;
 
@@ -182,6 +191,7 @@ function endGame() {
             console.log("no name enetered");
 
         }
+        // get and set highscore to the localstorage
         else {
 
             var finalScore = {
@@ -207,3 +217,19 @@ function endGame() {
 
 }
 
+
+
+// function getValue() {
+//     return localStorage.getItem('highScores');
+// }
+// console.log(getValue());
+
+// getValue()
+
+// function renderLastRegistered() {
+//     var email = localStorage.getItem("name");
+//     var password = localStorage.getItem("score");
+
+// }
+
+// renderLastRegistered()
